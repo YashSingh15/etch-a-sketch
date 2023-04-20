@@ -8,9 +8,23 @@ function makeGrid(n) {
             const gridSquare = document.createElement('div');
             gridSquare.classList.add('grid-square');
             gridRow.appendChild(gridSquare);
-
-            gridSquare.addEventListener('mouseenter', colorSquare);
         }
+    }
+}
+
+function startListeningForSketch() {
+    const gridSquares = document.querySelectorAll('.grid-square');
+
+    for (const gridSquare of gridSquares) {
+        gridSquare.addEventListener('mouseenter', colorSquare);
+    }
+}
+
+function stopListeningForSketch() {
+    const gridSquares = document.querySelectorAll('.grid-square');
+
+    for (const gridSquare of gridSquares) {
+        gridSquare.removeEventListener('mouseenter', colorSquare);
     }
 }
 
@@ -39,10 +53,14 @@ function setNumGridSquares() {
 }
 
 const grid = document.querySelector('#grid');
-makeGrid(4);
 
 const setGridButton = document.querySelector('#set-grid');
 const resetGridButton = document.querySelector('#reset-grid');
 
 setGridButton.addEventListener('click', setNumGridSquares);
 resetGridButton.addEventListener('click', resetGrid);
+
+makeGrid(4);
+
+document.addEventListener('keydown', startListeningForSketch);
+document.addEventListener('keyup', stopListeningForSketch);
