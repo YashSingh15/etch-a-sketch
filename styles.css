@@ -5,12 +5,28 @@
 
 .grid-square {
     flex: 0 1 auto;
-    width: 190px;
-    height: 190px;
+    width: 175px;
     background-color: yellow;
     border: 1px solid black;
+    aspect-ratio: 1 / 1;
 }
 
 .colored {
     background-color: pink;
+}
+
+.button-container {
+    padding: 0.5%;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+button {
+    margin-top: 0;
+    margin-bottom: 10px;
+    padding: 1%;
+    font-size: large;
+    font-weight: bold;
+    border-radius: 10%;
 }
