@@ -28,8 +28,30 @@ function stopListeningForSketch() {
     }
 }
 
+function startListeningForRainbow() {
+    const gridSquares = document.querySelectorAll('.grid-square');
+
+    for (const gridSquare of gridSquares) {
+        gridSquare.addEventListener('mouseenter', colorRainbow);
+    }
+}
+
+function stopListeningForRainbow() {
+    const gridSquares = document.querySelectorAll('.grid-square');
+
+    for (const gridSquare of gridSquares) {
+        gridSquare.removeEventListener('mouseenter', colorRainbow);
+    }
+}
+
 function colorSquare(e) {
-    e.target.classList.add('colored');
+    const gridSquare = e.target;
+    gridSquare.style.backgroundColor = 'pink';
+}
+
+function colorRainbow(e) {
+    const gridSquare = e.target;
+    gridSquare.style.backgroundColor = generateRandomColor();
 }
 
 function removeGrid() {
@@ -38,11 +60,29 @@ function removeGrid() {
     }
 }
 
+function enableRainbowMode() {
+    resetGrid();
+
+    document.removeEventListener('keydown', startListeningForSketch);
+    document.removeEventListener('keyup', stopListeningForSketch);
+    document.addEventListener('keydown', startListeningForRainbow);
+    document.addEventListener('keyup', stopListeningForRainbow);
+}
+
+function enableSketchMode() {
+    resetGrid();
+
+    document.removeEventListener('keydown', startListeningForRainbow);
+    document.removeEventListener('keyup', stopListeningForRainbow);
+    document.addEventListener('keydown', startListeningForSketch);
+    document.addEventListener('keyup', stopListeningForSketch);
+}
+
 function resetGrid() {
     const gridSquares = document.querySelectorAll('.grid-square');
 
     for (const gridSquare of gridSquares) {
-        gridSquare.classList.remove('colored');
+        gridSquare.style.backgroundColor = 'yellow';
     }
 }
 
@@ -52,13 +92,29 @@ function setNumGridSquares() {
     makeGrid(numGridSquares);
 }
 
+function generateRandomColor() {
+    const choices = '0123456789ABCDEF';
+    let color = '#';
+
+    for (let i = 0; i < 6; i++) {
+        const randomNumber = choices[Math.floor(Math.random() * choices.length)];
+        color += randomNumber;
+    }
+
+    return color;
+}
+
 const grid = document.querySelector('#grid');
 
 const setGridButton = document.querySelector('#set-grid');
 const resetGridButton = document.querySelector('#reset-grid');
+const sketchModeButton = document.querySelector('#sketch-mode');
+const rainbowModeButton = document.querySelector('#rainbow-mode');
 
 setGridButton.addEventListener('click', setNumGridSquares);
 resetGridButton.addEventListener('click', resetGrid);
+sketchModeButton.addEventListener('click', enableSketchMode);
+rainbowModeButton.addEventListener('click', enableRainbowMode);
 
 makeGrid(4);
 
