@@ -9,5 +9,12 @@ for (let i = 0; i < 4; i++) {
         const gridSquare = document.createElement('div');
         gridSquare.classList.add('grid-square');
         gridRow.appendChild(gridSquare);
+
+        gridSquare.addEventListener('mouseenter', colorSquare);
+        gridSquare.addEventListener('mouseleave', colorSquare)
     }
+}
+
+function colorSquare(e) {
+    e.target.classList.toggle('colored');
 }
